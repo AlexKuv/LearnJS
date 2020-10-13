@@ -1,44 +1,59 @@
-//1) Следующим переменным присвоить значения
+'use strict';
 
+let money = +prompt('Ваши месяцный доход', 50000);
 let income = 'Фриланс';
+let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+let deposit = confirm('Есть ли у вас депозит в банке?');
 let mission = 500000;
 let period = 10;
-//2) Используя методы и свойства:
-   //- Вывести в консоль тип данных значений переменных money, income, deposit;
-console.log('income: ',typeof income);
-/*  - Вывести в консоль “Период равен (period) месяцев” и “Цель заработать (mission) рублей/долларов/гривен/юани” */
+
+
+let showTypeOf = function (data){
+  console.log(data, typeof(data));
+};
+
+showTypeOf(money);
+showTypeOf(income);
+showTypeOf(deposit);
+console.log('income: ',income.length);
+console.log([addExpenses]);
+
+
+let expenses1 = prompt ('Введите обязательную статью расходов?');
+let amount1 = +prompt ('Во сколько это обойдется?', 2500);
+
+let expenses2 = prompt ('Введите обязательную статью расходов?');
+let amount2 = +prompt ('Во сколько это обойдется?', 15000);
+
+
+
 console.log('Период равен ' + period + ' месяцев');
 console.log('Цель заработать ' + mission + ' рублей');
 
-//УРОК №3
-//Спрашиваем у пользователя “Ваш месячный доход?” и результат сохраняем в переменную money
-let money = +prompt('Ваши месяцный доход');
-/* Спросить у пользователя “Перечислите возможные расходы за рассчитываемый 
-период через запятую” сохранить в переменную addExpenses 
-(пример: "Квартплата, проездной, кредит") */
-let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
-/*Спросить у пользователя “Есть ли у вас депозит в банке?” 
-и сохранить данные в переменной deposit (булево значение true/false)*/
-let deposit = confirm('Есть ли у вас депозит в банке?');
-//5) Спросить у пользователя по 2 раза каждый вопрос и записать ответы в разные переменные 
-/*Введите обязательную статью расходов?” (например expenses1, expenses2)
-“Во сколько это обойдется?” (например amount1, amount2)*/
-let expenses1 = prompt ('Введите обязательную статью расходов?');
-let amount1 = +prompt ('Во сколько это обойдется?');
+//4 Урок
+//1) Объявить функцию getExpensesMonth. Функция возвращает сумму всех обязательных расходов за месяц
+let getExpensesMonth = function () {
+   return amount1 + amount2 ;
+};
+console.log('Обязательные расходы: ', getExpensesMonth());
 
-let expenses2 = prompt ('Введите обязательную статью расходов?');
-let amount2 = +prompt ('Во сколько это обойдется?');
-/*6) Вычислить бюджет на месяц, учитывая обязательные расходы, 
-сохранить в новую переменную budgetMonth и вывести результат в консоль*/
-let budgetMonth = money - (amount1 + amount2);
-console.log('Бюджет на месяц: ',budgetMonth);
-/*7) Зная budgetMonth, посчитать за сколько месяцев будет достигнута цель mission, 
-вывести в консоль, округляя в большую сторону (методы объекта Math в помощь)*/
-console.log('Цель будет достигнута через: ',Math.ceil(mission/budgetMonth), 'мес');
-/*8) Поправить budgetDay учитывая бюджет на месяц, а не месячный доход. Вывести в консоль  округлив в меньшую сторону */
-let budgetDay = budgetMonth/30;
+/*2) Объявить функцию getAccumulatedMonth. Функция возвращает Накопления за месяц (Доходы минус расходы)*/
+ let getAccumulatedMonth = function () {
+    return money - (amount1 + amount2);
+ };
+ /*3) Объявить переменную accumulatedMonth и присвоить ей результат вызова функции getAccumulatedMonth */
+let accumulatedMonth  = getAccumulatedMonth();
+
+/*4) Объявить функцию getTargetMonth. Подсчитывает за какой период будет
+ достигнута цель, зная результат месячного накопления (accumulatedMonth) и возвращает результат*/
+let getTargetMonth = function () {
+  return mission/accumulatedMonth;
+};
+console.log('Цель будет достигнута за:', Math.ceil(getTargetMonth()), 'мес');
+
+let budgetDay = accumulatedMonth/30;
 console.log('Бюджет на день: ',Math.floor(budgetDay));
-//9
+
 if (budgetDay >= 1200) {
   console.log('У Вас высокий уровень дохода!');
 } else if (budgetDay <1200 ,budgetDay >=600) {
