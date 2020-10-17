@@ -67,13 +67,13 @@ let appData = {
   },
   getStatusIncome: function () {
     if (appData.budgetDay >= 1200) {
-    console.log('У Вас высокий уровень дохода!');
+   return('У Вас высокий уровень дохода!');
   } else if (appData.budgetDay <1200 ,appData.budgetDay >=600) {
-    console.log('У Вас средний уровень дохода');
+   return('У Вас средний уровень дохода');
   } else if (appData.budgetDay <600, appData.budgetDay>0) {
-    console.log('К сожалению у вас уровень дохода ниже среднего');
+    return('К сожалению у вас уровень дохода ниже среднего');
   } else if (appData.budgetDay <=0) {
-    console.log('Что то пошло не так');
+    return('Что то пошло не так');
   }
   },
 };
@@ -100,7 +100,7 @@ console.log('Цель не будет достигнута');
 
 appData.budgetDay = appData.getBudget()/30;
 
-appData.getStatusIncome();
+console.log(appData.getStatusIncome());
 
 for (let key in appData) {
   console.log('Наша программа включаетв себя данные: ', key , appData[key]);
