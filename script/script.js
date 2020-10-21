@@ -8,7 +8,6 @@ const bgc = document.body.style.backgroundImage =
 'url(../image/you-dont-know-js.jpg)';     //Изменил фон
 
 const link = document.querySelectorAll('a');  //Заголовки книг
-console.log('link: ', link);
 const book2 = book[0];  //Книга №2
 const bookUl = book2.querySelectorAll('ul'); //ul лист 2-й книги
 const list = book2.querySelectorAll('li'); //Список глав 2-й книги
@@ -16,12 +15,11 @@ const list = book2.querySelectorAll('li'); //Список глав 2-й книг
 const book5 = book[5]; // Книга №5
 const bookUl5 = book5.querySelectorAll('ul'); //ul лист 5-й книги
 const list5 = book5.querySelectorAll('li'); //Список глав 5-й книги
-console.log('list5: ', list5);
 
 
 const book6 = book[2]; // Книга №6
-const bookUl6 = book6.getElementsByTagName('ul'); //ul лист 6-й книги
-const list6 = book6.getElementsByTagName('li'); //Список глав 6-й книги
+const bookUl6 = book6.querySelectorAll('ul'); //ul лист 6-й книги
+const list6 = book6.querySelectorAll('li'); //Список глав 6-й книги
 
 
 advertising.remove();
