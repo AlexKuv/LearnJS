@@ -1,191 +1,69 @@
 'use strict';
-/*
-let money;
-
-let start = function (){
-  do {
-    money = prompt('Ваш месяцный доход');
-  }
-  while (isNaN(money) || money.trim() === '' || money === null); 
-  
-  money = Number(money);
-};
-
-start();
 
 
-let appData = {
-  budget: money,
-  budgetDay: 0,
-  budgetMonth: 0,
-  income : {},
-  addIncome : [],
-  expenses:{},
-  addExpenses: [],
-  expensesMonth: 0,
-  deposit: false,
-  percentDeposit: 0,
-  moneyDeposit: 0,
-  mission: 500000,
-  period: 3,
-  asking: function () {
+const book = document.querySelectorAll('.book');  //Книги
+const books = document.querySelectorAll('.books');  //Блок с книгами
+const advertising = document.querySelector('.adv'); //Реклама
+const bgc = document.body.style.backgroundImage = 
+'url(../image/you-dont-know-js.jpg)';     //Изменил фон
 
-    if(confirm('Есть ли у Вас дополнительный источник дохода')) {
-      let itemIncome = prompt('Какой у Вас дополнительный заработок?', 'Фриланс');
+const link = document.getElementsByTagName('a');  //Заголовки книг
+const book2 = book[0];  //Книга №2
+const bookUl = book2.getElementsByTagName('ul'); //ul лист 2-й книги
+const list = book2.getElementsByTagName('li'); //Список глав 2-й книги
 
-        while(!isNaN(itemIncome)){
-          itemIncome = prompt('Какой у Вас дополнительный заработок?', 'Фриланс');
-        }
-
-      let cashIncome = prompt('Сколько зарабатываете на этом?', 15000);
-
-      while (isNaN(parseFloat(cashIncome))) {
-        cashIncome = prompt('Сколько зарабатываете на этом?', 15000);
-      }
-
-      appData.income[itemIncome] = cashIncome;
-    }
-
-    let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
-
-    appData.addExpenses = addExpenses.toLowerCase().split(',');
-    appData.deposit = confirm('Есть ли у вас депозит в банке?');
-
-        let sum = 0;
-
-        for (let i = 0; i<2; i++) {
-              
-          let a = prompt ('Введите обязательную статью расходов?');
-
-          while (!isNaN(a)) {
-            a = prompt ('Введите обязательную статью расходов?');
-          }
-
-                  do{
-                  sum = prompt ('Во сколько это обойдется?');
-                  }
-                  while (isNaN(parseFloat(sum)));
-                  sum = Number(sum);
-
-                  appData.expenses[a] = sum;
-            }
-            return sum;
-  },
-  getExpensesMonth: function () {
-
-  let rez = 0;
-
-  for (let key in appData.expenses ) {
-    rez += appData.expenses[key];
-  }
-  appData.expensesMonth = rez;
-  return rez;
-  },
-  getBudget: function () {
-   appData.budgetMonth = appData.budget - appData.expensesMonth;
-   appData.budgetDay = Math.floor(appData.budgetMonth/30);
-    
-  },
-  getTargetMonth: function () {
-  return appData.mission/appData.budgetMonth;
-  },
-  getStatusIncome: function () {
-    if (appData.budgetDay >= 1200) {
-   return('У Вас высокий уровень дохода!');
-  } else if (appData.budgetDay <1200 ,appData.budgetDay >=600) {
-   return('У Вас средний уровень дохода');
-  } else if (appData.budgetDay <600, appData.budgetDay>0) {
-    return('К сожалению у вас уровень дохода ниже среднего');
-  } else if (appData.budgetDay <=0) {
-    return('Что то пошло не так');
-  }
-  },
-  getInfoDeposit: function() {
-    if (appData.deposit) {
-      appData.percentDeposit = prompt('Какой годовой процент?', '10');
-
-      while (isNaN(parseFloat(appData.percentDeposit))) {
-        appData.percentDeposit = prompt('Какой годовой процент?', '10');
-      }
-      appData.moneyDeposit = prompt('Какая сумма заложена?', '10000');
-
-       while (isNaN(parseFloat(appData.moneyDeposit))) {
-        appData.moneyDeposit = prompt('Какая сумма заложена?', '10000');
-      }
-    }
-  },
-  calcSavedMoney:function () {
-    return appData.budgetMonth * appData.period;
-  }
-};
+const book5 = book[5]; // Книга №5
+const bookUl5 = book5.getElementsByTagName('ul'); //ul лист 5-й книги
+const list5 = book5.getElementsByTagName('li'); //Список глав 5-й книги
 
 
-appData.asking();
-appData.getExpensesMonth();
-appData.getBudget();
-
-console.log('Обязательные расходы: ', appData.getExpensesMonth());
+const book6 = book[2]; // Книга №6
+const bookUl6 = book6.getElementsByTagName('ul'); //ul лист 6-й книги
+const list6 = book6.getElementsByTagName('li'); //Список глав 6-й книги
 
 
-console.log('Бюджет на месяц: ', appData.budgetMonth);
+advertising.remove();
+//Сортировка глав 2-й книги
+bookUl[0].append(list[0]);
+bookUl[0].append(list[0]);
+bookUl[0].append(list[1]);
+bookUl[0].append(list[3]);
+bookUl[0].append(list[4]);
+bookUl[0].append(list[1]);
+bookUl[0].append(list[1]);
+bookUl[0].append(list[1]);
+bookUl[0].append(list[1]);
+bookUl[0].append(list[0]);
+bookUl[0].append(list[0]);
 
-appData.getTargetMonth();
+//Сортировка книг
+books[0].prepend(book[2]);
+books[0].prepend(book[5]);
+books[0].prepend(book[3]);
+books[0].prepend(book[4]);
+books[0].prepend(book[0]);
+books[0].prepend(book[1]);
 
-if (appData.getTargetMonth() > 0) {
-  console.log('Цель будет достигнута за:', Math.ceil(appData.getTargetMonth()), 'мес');
-} else {
-console.log('Цель не будет достигнута');
-}
+
+link[2].textContent = 'Книга 3. this и Прототипы Объектов'; 
 
 
-console.log(appData.getStatusIncome());
+//Сортировка глав 5-й книги
+bookUl5[0].append(list5[0]);
+bookUl5[0].append(list5[0]);
+bookUl5[0].append(list5[7]);
+bookUl5[0].append(list5[1]);
+bookUl5[0].append(list5[1]);
+bookUl5[0].append(list5[0]);
+bookUl5[0].append(list5[1]);
+bookUl5[0].append(list5[1]);
+bookUl5[0].append(list5[0]);
+bookUl5[0].append(list5[0]);
+bookUl5[0].append(list5[0]);
 
 
 
-
-for (let key in appData) {
-  console.log('Наша программа включаетв себя данные: ', key , appData[key]);
-}
-
-
-let addExpensesLog = function  () {
-  let c = appData.addExpenses.join(', ');
-
-  function capitalize(a) {
-
- return a.replace(/(^|\s)\S/g, function(a) {
-   return a.toUpperCase();
-  });
-}
-
-console.log(capitalize(c));
-};
-
-addExpensesLog();
-*/
-//Урок №9
-
-const moneyMonth = document.querySelector('.salary-amount'),
- incomeTitle = document.querySelector('.income-items .income-title'),
- incomeAmount = document.querySelector('.income-amount'),
- expensesTitle = document.querySelector('.expenses-items .expenses-title'),
- expensesAmount = document.querySelector('.expenses-amount'),
- additionalExpensesItem = document.querySelector('.additional_expenses-item'),
- targetAmount = document.querySelector('.target-amount'),
- periodSelect = document.querySelector('.period-select'),
- buttonStart = document.getElementById('start'),
- btnPlusIncome = document.getElementsByTagName('button')[0],
- btnPlusExpenses = document.getElementsByTagName('button')[1],
- depositCheck = document.querySelector('#deposit-check'),
- incomeItem = document.querySelectorAll('.additional_income-item'),
- budgetMonth = document.getElementsByClassName('budget_month-value'),
- budgetDay = document.getElementsByClassName('budget_day-value'),
- budgetExpenses = document.getElementsByClassName('expenses_month-value'),
- additionalIncome = document.getElementsByClassName('additional_income-value'),
- additionalExpenses = document.getElementsByClassName('additional_expenses-value'),
- incomePeriod = document.getElementsByClassName('income_period-value'),
- targetMonth = document.getElementsByClassName('target_month-value');
-
-
-
-
+//Добавление 8-й главы в 6-й книге
+const book6Clone = list6[9].cloneNode(true);
+bookUl6[0].append(book6Clone);
+list6[9].textContent = 'Глава 8: За пределами ES6';
