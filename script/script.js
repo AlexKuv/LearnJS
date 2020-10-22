@@ -1,10 +1,12 @@
 'use strict';
 
+
 const buttonStart = document.getElementById('start'), 
  salaryAmount = document.querySelector('.salary-amount'),
  incomeTitle = document.querySelector('.income-items .income-title'),
+ incomeAmount = document.querySelector('.income-items .income-amount'),
  expensesTitle = document.querySelector('.expenses-items .expenses-title'),
-// expensesAmount = document.querySelector('.expenses-amount'),
+ expensesAmount = document.querySelector('.expenses-items .expenses-amount'),
  additionalExpensesItem = document.querySelector('.additional_expenses-item'),
  targetAmount = document.querySelector('.target-amount'),
  periodSelect = document.querySelector('.period-select'),
@@ -23,6 +25,9 @@ const buttonStart = document.getElementById('start'),
  let periodAmount = document.querySelector('.period-amount');
 let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
+
+    let placeholderName = document.querySelectorAll('[placeholder="Наименование"]');
+    let placeholderSum = document.querySelectorAll('[placeholder="Сумма"]');
 buttonStart.disabled = false;
 let appData = {
   budget: 0,
@@ -37,27 +42,42 @@ let appData = {
   deposit: false,
   percentDeposit: 0,
   moneyDeposit: 0,
-  start: function (){
-
+  start: function (event){
+    event.preventDefault();
   appData.budget = +salaryAmount.value;
+  
 
   appData.getExpenses();
   appData.getIncome();
   appData.getExpensesMonth();
   appData.getAddExpenses();
   appData.getAddIncome();
-  appData.salaryValid();
+  
   appData.getBudget();
   appData.showResult();
+  //appData.salaryValid();
+    //appData.placeholderNameValid();
+ // appData.placeholderSumValid();
   },
   salaryValid: function () {
     
-    while (isNaN(parseFloat(salaryAmount.value)) || salaryAmount.value === '') {
-      alert('Введите корректные данные!');
-      return ;
+    if (isNaN(parseFloat(salaryAmount.value)) || salaryAmount.value === '') {
+      alert ('hi');
     } 
+    return;
   },
-
+  placeholderNameValid: function () {
+    while (!isNaN(placeholderName.value)){
+      alert('Введите Буквы!');
+      return;
+    }
+  },
+   placeholderSumValid: function () {
+    while (isNaN(parseFloat(placeholderSum.value))){
+      alert('Введите число!');
+      return;
+    }
+  },
   showResult: function () {
     budgetMonthValue.value = appData.budgetMonth;
     budgetDayValue.value = appData.budgetDay;
@@ -81,6 +101,8 @@ let appData = {
    
     let expensesItemClone = expensesItems[0].cloneNode(true);
     expensesItems[0].parentNode.insertBefore(expensesItemClone, btnPlusExpenses);
+    expensesTitle.value = '';
+    expensesAmount.value = '';
     expensesItems = document.querySelectorAll('.expenses-items');
 
     if (expensesItems.length === 3) {
@@ -89,11 +111,12 @@ let appData = {
     
   },
   addIncomeBlock: function () {
-
     let incomeItemsClone = incomeItems[0].cloneNode(true);
     incomeItems[0].parentNode.insertBefore(incomeItemsClone, btnPlusIncome);
+    incomeTitle.value = '';
+    incomeAmount.value = '';
     incomeItems = document.querySelectorAll('.income-items');
-
+    
     if (incomeItems.length === 3) {
       btnPlusIncome.style.display = 'none';
     }
@@ -189,8 +212,21 @@ let appData = {
   }
 };
 
-buttonStart.addEventListener('click', appData.start);
 
+
+buttonStart.addEventListener("click", () => {
+    if (salaryAmount.value === "") {
+       alert('Ошибка, заполните поле "Месячный доход!"');
+    }else if (isNaN(parseFloat(salaryAmount.value))) {
+        alert('Ошибка, введите число!"');
+        return;
+    } else {
+      buttonStart.addEventListener('click', appData.start);
+    }
+});
+
+
+//buttonStart.addEventListener('click', appData.start);
 btnPlusIncome.addEventListener('click', appData.addIncomeBlock);
 btnPlusExpenses.addEventListener('click', appData.addExpensesBlock);
 periodSelect.addEventListener('input', appData.periodRange);
@@ -211,19 +247,17 @@ console.log('Цель не будет достигнута');
 /*
 let addExpensesLog = function  () {
   let c = appData.addExpenses.join(', ');
-
   function capitalize(a) {
-
  return a.replace(/(^|\s)\S/g, function(a) {
    return a.toUpperCase();
   });
 }
-
 console.log(capitalize(c));
 };
-
 addExpensesLog();
 */
+
+
 
 
 
