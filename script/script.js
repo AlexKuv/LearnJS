@@ -28,7 +28,7 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
 
     let placeholderName = document.querySelectorAll('[placeholder="Наименование"]');
     let placeholderSum = document.querySelectorAll('[placeholder="Сумма"]');
-buttonStart.disabled = false;
+
 let appData = {
   budget: 0,
   budgetDay: 0,
@@ -42,8 +42,8 @@ let appData = {
   deposit: false,
   percentDeposit: 0,
   moneyDeposit: 0,
-  start: function (event){
-    event.preventDefault();
+  start: function (){
+    
   appData.budget = +salaryAmount.value;
   
 
@@ -55,10 +55,8 @@ let appData = {
   
   appData.getBudget();
   appData.showResult();
-  //appData.salaryValid();
-    //appData.placeholderNameValid();
- // appData.placeholderSumValid();
   },
+
   salaryValid: function () {
     
     if (isNaN(parseFloat(salaryAmount.value)) || salaryAmount.value === '') {
@@ -215,16 +213,20 @@ let appData = {
 
 
 buttonStart.addEventListener("click", () => {
+  
+
     if (salaryAmount.value === "") {
        alert('Ошибка, заполните поле "Месячный доход!"');
     }else if (isNaN(parseFloat(salaryAmount.value))) {
         alert('Ошибка, введите число!"');
-        return;
+    }else if (isNaN(parseFloat(incomeAmount.value)) || 
+    isNaN(parseFloat(expensesAmount.value)) || isNaN(parseFloat(targetAmount.value))){
+      alert('В полях "Сумма" введите число!');
     } else {
       buttonStart.addEventListener('click', appData.start);
     }
 });
-
+console.log('placeholderSum: ', placeholderSum);
 
 //buttonStart.addEventListener('click', appData.start);
 btnPlusIncome.addEventListener('click', appData.addIncomeBlock);
