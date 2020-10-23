@@ -197,13 +197,13 @@ buttonStart.addEventListener("click", () => {
     if (salaryAmount.value === "") {
        alert('Ошибка, заполните поле "Месячный доход!"');
     }else {
-      buttonStart.addEventListener('click', appData.start);
+      appData.start();
     }
 });
 
 for (let x of rusString) {
     x.addEventListener("input", () => {
-      x.value = x.value.replace(/[^а-я + '' + ',']/, "");
+      x.value = x.value.replace(/[^а-я,А-Я + '' + ',']/, "");
     });
 }
 for (let x of onlyNumbers) {
