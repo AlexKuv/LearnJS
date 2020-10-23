@@ -26,8 +26,8 @@ const buttonStart = document.getElementById('start'),
 let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
 
-    let placeholderName = document.querySelectorAll('[placeholder="Наименование"]');
-    let placeholderSum = document.querySelectorAll('[placeholder="Сумма"]');
+  let rusString = document.querySelectorAll('[placeholder="Наименование"]'),
+  onlyNumbers = document.querySelectorAll('[placeholder="Сумма"]');
 
 let appData = {
   budget: 0,
@@ -55,26 +55,6 @@ let appData = {
   
   appData.getBudget();
   appData.showResult();
-  },
-
-  salaryValid: function () {
-    
-    if (isNaN(parseFloat(salaryAmount.value)) || salaryAmount.value === '') {
-      alert ('hi');
-    } 
-    return;
-  },
-  placeholderNameValid: function () {
-    while (!isNaN(placeholderName.value)){
-      alert('Введите Буквы!');
-      return;
-    }
-  },
-   placeholderSumValid: function () {
-    while (isNaN(parseFloat(placeholderSum.value))){
-      alert('Введите число!');
-      return;
-    }
   },
   showResult: function () {
     budgetMonthValue.value = appData.budgetMonth;
@@ -213,21 +193,24 @@ let appData = {
 
 
 buttonStart.addEventListener("click", () => {
-  
 
     if (salaryAmount.value === "") {
        alert('Ошибка, заполните поле "Месячный доход!"');
-    }else if (isNaN(parseFloat(salaryAmount.value))) {
-        alert('Ошибка, введите число!"');
-    }else if (isNaN(parseFloat(incomeAmount.value)) || 
-    isNaN(parseFloat(expensesAmount.value)) || isNaN(parseFloat(targetAmount.value))){
-      alert('В полях "Сумма" введите число!');
-    } else {
+    }else {
       buttonStart.addEventListener('click', appData.start);
     }
 });
-console.log('placeholderSum: ', placeholderSum);
 
+for (let x of rusString) {
+    x.addEventListener("input", () => {
+      x.value = x.value.replace(/[^а-я + '' + ',']/, "");
+    });
+}
+for (let x of onlyNumbers) {
+  x.addEventListener("input", () => {
+    x.value = x.value.replace(/[^0-9]/, "");
+  });
+}
 //buttonStart.addEventListener('click', appData.start);
 btnPlusIncome.addEventListener('click', appData.addIncomeBlock);
 btnPlusExpenses.addEventListener('click', appData.addExpensesBlock);
