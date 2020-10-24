@@ -26,8 +26,6 @@ const buttonStart = document.getElementById('start'),
 let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
 
-  let rusString = document.querySelectorAll('[placeholder="Наименование"]'),
-  onlyNumbers = document.querySelectorAll('[placeholder="Сумма"]');
 
 let appData = {
   budget: 0,
@@ -54,6 +52,7 @@ let appData = {
   appData.getAddIncome();
   
   appData.getBudget();
+  appData.getTargetMonth();
   appData.showResult();
   },
   showResult: function () {
@@ -79,25 +78,27 @@ let appData = {
    
     let expensesItemClone = expensesItems[0].cloneNode(true);
     expensesItems[0].parentNode.insertBefore(expensesItemClone, btnPlusExpenses);
-    expensesTitle.value = '';
-    expensesAmount.value = '';
+    expensesItemClone.querySelectorAll('input').forEach(i => i.value = '');
+ 
     expensesItems = document.querySelectorAll('.expenses-items');
-
+  
     if (expensesItems.length === 3) {
       btnPlusExpenses.style.display = 'none';
     }
-    
+      validator('[placeholder="Наименование"]', /[^а-яА-я]/);
+      validator('[placeholder="Сумма"]', /[^0-9]/);
   },
   addIncomeBlock: function () {
     let incomeItemsClone = incomeItems[0].cloneNode(true);
     incomeItems[0].parentNode.insertBefore(incomeItemsClone, btnPlusIncome);
-    incomeTitle.value = '';
-    incomeAmount.value = '';
+    incomeItemsClone.querySelectorAll('input').forEach(i => i.value = '');
     incomeItems = document.querySelectorAll('.income-items');
     
     if (incomeItems.length === 3) {
       btnPlusIncome.style.display = 'none';
     }
+    validator('[placeholder="Наименование"]', /[^а-яА-я]/);
+    validator('[placeholder="Сумма"]', /[^0-9]/);
   },
   getExpenses: function () {
     expensesItems.forEach(function(item){
@@ -190,32 +191,32 @@ let appData = {
   }
 };
 
-
-
-buttonStart.addEventListener("click", () => {
-
-    if (salaryAmount.value === "") {
-       alert('Ошибка, заполните поле "Месячный доход!"');
-    }else {
-      appData.start();
-    }
+buttonStart.disabled = true;
+salaryAmount.addEventListener("input", () => {
+  buttonStart.disabled = salaryAmount.value.trim() === '';
 });
 
-for (let x of rusString) {
-    x.addEventListener("input", () => {
-      x.value = x.value.replace(/[^а-я,А-Я + '' + ',']/, "");
+buttonStart.addEventListener('click', appData.start);
+
+
+const validator = (selector, reg) => { 
+  const helper = document.querySelectorAll(selector); 
+  helper.forEach(item => {
+    item.addEventListener('input', () => {
+      item.value = item.value.replace(reg, "");
     });
-}
-for (let x of onlyNumbers) {
-  x.addEventListener("input", () => {
-    x.value = x.value.replace(/[^0-9]/, "");
   });
-}
-//buttonStart.addEventListener('click', appData.start);
+};
+
+validator('.salary-amount', /[^0-9]/);
+validator('[placeholder="Наименование"]', /[^а-яА-я]/);
+validator('[placeholder="Сумма"]', /[^0-9]/);
+
+
 btnPlusIncome.addEventListener('click', appData.addIncomeBlock);
 btnPlusExpenses.addEventListener('click', appData.addExpensesBlock);
 periodSelect.addEventListener('input', appData.periodRange);
-appData.getTargetMonth();
+
 
 /*
 if (appData.getTargetMonth() > 0) {
