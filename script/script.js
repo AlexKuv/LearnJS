@@ -54,30 +54,30 @@ let appData = {
   percentDeposit: 0,
   moneyDeposit: 0,
   start: function (){
-  appData.budget = +salaryAmount.value;
+  this.budget = +salaryAmount.value;
   
     
-  appData.getExpenses();
-  appData.getIncome();
-  appData.getExpensesMonth();
-  appData.getAddExpenses();
-  appData.getAddIncome();
+  this.getExpenses();
+  this.getIncome();
+  this.getExpensesMonth();
+  this.getAddExpenses();
+  this.getAddIncome();
      
-  appData.getBudget();
-  appData.getTargetMonth();
-  appData.showResult();
+  this.getBudget();
+  this.getTargetMonth();
+  this.showResult();
   },
   showResult: function () {
-    budgetMonthValue.value = appData.budgetMonth;
-    budgetDayValue.value = appData.budgetDay;
-    expensesMonthValue.value = appData.expensesMonth; 
-    additionalExpensesValue.value = appData.addExpenses.join(',');
-    additionalIncomeValue.value = appData.addIncome.join(',');
-    targetMonthValue.value = Math.ceil(appData.getTargetMonth());
-    incomePeriodValue.value = appData.calcSavedMoney();
+    budgetMonthValue.value = this.budgetMonth;
+    budgetDayValue.value = this.budgetDay;
+    expensesMonthValue.value = this.expensesMonth; 
+    additionalExpensesValue.value = this.addExpenses.join(',');
+    additionalIncomeValue.value = this.addIncome.join(',');
+    targetMonthValue.value = Math.ceil(this.getTargetMonth());
+    incomePeriodValue.value = this.calcSavedMoney();
     
-    let periodChange = function () {
-      incomePeriodValue.value = appData.calcSavedMoney();
+    let periodChange =  () => {
+      incomePeriodValue.value = this.calcSavedMoney();
     };
     periodSelect.addEventListener('input', periodChange);
     
@@ -220,6 +220,7 @@ let appData = {
 
      this.addIncome = [];
      this.addExpenses = [];
+     this.budgetMonth = 0;
      appData.incomeMonth = 0;
      periodSelect.value = 1;
      periodAmount.textContent = 1;
@@ -257,10 +258,14 @@ validator('.salary-amount', /[^0-9]/);
 validator('[placeholder="Наименование"]', /[^а-яА-я]/);
 validator('[placeholder="Сумма"]', /[^0-9]/);
 
+let addIncomeBlockBinde = appData.addIncomeBlock.bind(appData);
+btnPlusIncome.addEventListener('click', addIncomeBlockBinde);
 
-btnPlusIncome.addEventListener('click', appData.addIncomeBlock);
-btnPlusExpenses.addEventListener('click', appData.addExpensesBlock);
-periodSelect.addEventListener('input', appData.periodRange);
+let addExpensesBlockBinde = appData.addExpensesBlock.bind(appData);
+btnPlusExpenses.addEventListener('click', addExpensesBlockBinde);
+
+let periodRangeBind = appData.periodRange.bind(appData);
+periodSelect.addEventListener('input', periodRangeBind);
     
 
 
@@ -280,7 +285,8 @@ buttonStart.addEventListener('click', ()=> {
   block();
 });
 
-btnCancel.addEventListener('click', appData.reset);
+let resetBind = appData.reset.bind(appData);
+btnCancel.addEventListener('click', resetBind);
 /*
 if (appData.getTargetMonth() > 0) {
   console.log('Цель будет достигнута за:', Math.ceil(appData.getTargetMonth()), 'мес');
