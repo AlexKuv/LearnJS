@@ -101,6 +101,7 @@ let appData = {
       validator('[placeholder="Наименование"]', /[^а-яА-я]/);
       validator('[placeholder="Сумма"]', /[^0-9]/);
   },
+
   addIncomeBlock: function () {
     let incomeItemsClone = incomeItems[0].cloneNode(true);
     incomeItems[0].parentNode.insertBefore(incomeItemsClone, btnPlusIncome);
@@ -207,29 +208,38 @@ let appData = {
       item.value = '';
       item.disabled = false;
   });
-     this.income = {};
+      
+    for (let a in appData.income){
+      delete appData.income[a];
+    }
+     for (let a in appData.expenses){
+      delete appData.expenses[a];
+    }
+
      this.addIncome = [];
-     this.expenses = {};
      this.addExpenses = [];
-     this.incomeMonth = 0;
+     appData.incomeMonth = 0;
      periodSelect.value = 1;
      periodAmount.textContent = 1;
      buttonStart.style.display = 'block';
      buttonStart.disabled = true;
      btnCancel.style.display='none';
-     if (incomeItems.length > 0){
-       btnPlusIncome.style.display = 'block';
-       incomeItems[0].remove();
-       incomeItems = document.querySelectorAll('.income-items');
-     }else if (incomeItems.length > 1){
-        btnPlusIncome.style.display = 'block';
-       incomeItems[0].remove();
-       incomeItems[1].remove();
-       incomeItems = document.querySelectorAll('.income-items');
-     }
+     expensesItems = document.querySelectorAll('.expenses-items');
+     incomeItems = document.querySelectorAll('.income-items');
+     for (let i = expensesItems.length - 1; i > 0; i--) {
+            expensesItems[i].remove();
+            btnPlusExpenses.style.display = 'block';
+        }  
+        for (let i = incomeItems.length - 1; i > 0; i--) {
+            incomeItems[i].remove();
+            btnPlusIncome.style.display = 'block';
+        }  
+
      }
      
 };
+
+
 
 buttonStart.disabled = true;
 salaryAmount.addEventListener("input", () => {
@@ -249,6 +259,7 @@ validator('[placeholder="Сумма"]', /[^0-9]/);
 btnPlusIncome.addEventListener('click', appData.addIncomeBlock);
 btnPlusExpenses.addEventListener('click', appData.addExpensesBlock);
 periodSelect.addEventListener('input', appData.periodRange);
+    
 
 
 //Блокирует input
@@ -293,9 +304,19 @@ console.log(capitalize(c));
 addExpensesLog();
 */
 
+/*
+     while (incomeItems.length > 0){
+          incomeItems[1].remove();
+          incomeItems = document.querySelectorAll('.income-items');
+          btnPlusIncome.style.display = 'block';
+     };
+
+     while (expensesItems.length > 0){
+          expensesItems[1].remove();
+          expensesItems = document.querySelectorAll('.expenses-items');
+          btnPlusExpenses.style.display = 'block';
+     }
 
 
 
-
-
-
+*/
