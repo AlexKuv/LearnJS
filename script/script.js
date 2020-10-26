@@ -120,9 +120,9 @@ let appData = {
      let cashExpenses = item.querySelector('.expenses-amount').value;
      cashExpenses = Number(cashExpenses);
      if(itemExpenses !== '' && cashExpenses !== '') {
-      appData.expenses[itemExpenses] = cashExpenses;
+      this.expenses[itemExpenses] = cashExpenses;
      }
-    });
+    },this);
   },
   getIncome:function () {
       incomeItems.forEach(function (item){
@@ -130,9 +130,9 @@ let appData = {
         let cashIncome = item.querySelector('.income-amount').value;
         cashIncome = Number(cashIncome);
         if(itemIncome !== '' && cashIncome !== ''){
-          appData.income[itemIncome] = cashIncome;
+          this.income[itemIncome] = cashIncome;
         }
-      });
+      },this);
 
       for (let key in this.income){
         this.incomeMonth += +this.income[key];
