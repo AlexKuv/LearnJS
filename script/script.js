@@ -27,6 +27,17 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
 
 
+//Валидатор
+    const validator = (selector, reg) => { 
+  const helper = document.querySelectorAll(selector); 
+  helper.forEach(item => {
+    item.addEventListener('input', () => {
+      item.value = item.value.replace(reg, "");
+    });
+  });
+};
+
+
 let appData = {
   budget: 0,
   budgetDay: 0,
@@ -199,14 +210,7 @@ salaryAmount.addEventListener("input", () => {
 buttonStart.addEventListener('click', appData.start);
 
 
-const validator = (selector, reg) => { 
-  const helper = document.querySelectorAll(selector); 
-  helper.forEach(item => {
-    item.addEventListener('input', () => {
-      item.value = item.value.replace(reg, "");
-    });
-  });
-};
+
 
 validator('.salary-amount', /[^0-9]/);
 validator('[placeholder="Наименование"]', /[^а-яА-я]/);
