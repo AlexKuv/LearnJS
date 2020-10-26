@@ -54,7 +54,6 @@ let appData = {
   percentDeposit: 0,
   moneyDeposit: 0,
   start: function (){
-    console.log(this);
   appData.budget = +salaryAmount.value;
   
     
@@ -115,6 +114,7 @@ let appData = {
     validator('[placeholder="Сумма"]', /[^0-9]/);
   },
   getExpenses: function () {
+    console.log(this);
     expensesItems.forEach(function(item){
      let itemExpenses = item.querySelector('.expenses-title').value;
      let cashExpenses = item.querySelector('.expenses-amount').value;
@@ -143,7 +143,8 @@ let appData = {
     addExpenses.forEach(function(item) {
       item = item.trim();
       if (item !== '') {
-        appData.addExpenses.push(item);
+        appData.addExpenses.apply(appData);
+        this.addExpenses.push(item);
       }
     });
   },
@@ -151,7 +152,8 @@ let appData = {
     additionalIncomeItem.forEach(function(item){
       let itemValue = item.value.trim();
       if(item.value !== ''){
-        appData.addIncome.push(itemValue);
+      appData.addIncome.apply(appData);
+        this.addIncome.push(itemValue);
       }
     });
   },
