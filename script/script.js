@@ -2,6 +2,7 @@
 
 
 const buttonStart = document.getElementById('start'), 
+ btnCancel = document.querySelector('#cancel'),
  salaryAmount = document.querySelector('.salary-amount'),
  incomeTitle = document.querySelector('.income-items .income-title'),
  incomeAmount = document.querySelector('.income-items .income-amount'),
@@ -25,7 +26,7 @@ const buttonStart = document.getElementById('start'),
  let periodAmount = document.querySelector('.period-amount');
 let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
-
+ 
 
 //Валидатор
     const validator = (selector, reg) => { 
@@ -52,16 +53,16 @@ let appData = {
   percentDeposit: 0,
   moneyDeposit: 0,
   start: function (){
-    
+    console.log(this);
   appData.budget = +salaryAmount.value;
   
-
+    
   appData.getExpenses();
   appData.getIncome();
   appData.getExpensesMonth();
   appData.getAddExpenses();
   appData.getAddIncome();
-  
+     
   appData.getBudget();
   appData.getTargetMonth();
   appData.showResult();
@@ -86,7 +87,7 @@ let appData = {
     periodAmount.textContent = periodSelect.value;
   },
   addExpensesBlock: function() {
-   
+ 
     let expensesItemClone = expensesItems[0].cloneNode(true);
     expensesItems[0].parentNode.insertBefore(expensesItemClone, btnPlusExpenses);
     expensesItemClone.querySelectorAll('input').forEach(i => i.value = '');
@@ -104,7 +105,7 @@ let appData = {
     incomeItems[0].parentNode.insertBefore(incomeItemsClone, btnPlusIncome);
     incomeItemsClone.querySelectorAll('input').forEach(i => i.value = '');
     incomeItems = document.querySelectorAll('.income-items');
-    
+
     if (incomeItems.length === 3) {
       btnPlusIncome.style.display = 'none';
     }
@@ -122,7 +123,6 @@ let appData = {
     });
   },
   getIncome:function () {
-
       incomeItems.forEach(function (item){
         let itemIncome = item.querySelector('.income-title').value;
         let cashIncome = item.querySelector('.income-amount').value;
@@ -132,8 +132,8 @@ let appData = {
         }
       });
 
-      for (let key in appData.income){
-        appData.incomeMonth += +appData.income[key];
+      for (let key in this.income){
+        this.incomeMonth += +this.income[key];
       }
   },
   getAddExpenses: function() {
@@ -158,47 +158,61 @@ let appData = {
 
   let rez = 0;
 
-  for (let key in appData.expenses ) {
-    rez += appData.expenses[key];
+  for (let key in this.expenses ) {
+    rez += this.expenses[key];
   }
-  appData.expensesMonth = rez;
+  this.expensesMonth = rez;
   return rez;
   },
   getBudget: function () {
-   appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
-   appData.budgetDay = Math.floor(appData.budgetMonth/30);
+   this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+   this.budgetDay = Math.floor(this.budgetMonth/30);
     
   },
   getTargetMonth: function () {
-  return targetAmount.value/appData.budgetMonth;
+  return targetAmount.value/this.budgetMonth;
   },
   getStatusIncome: function () {
-    if (appData.budgetDay >= 1200) {
+    if (this.budgetDay >= 1200) {
    return('У Вас высокий уровень дохода!');
-  } else if (appData.budgetDay <1200 ,appData.budgetDay >=600) {
+  } else if (this.budgetDay <1200 ,this.budgetDay >=600) {
    return('У Вас средний уровень дохода');
-  } else if (appData.budgetDay <600, appData.budgetDay>0) {
+  } else if (this.budgetDay <600, this.budgetDay>0) {
     return('К сожалению у вас уровень дохода ниже среднего');
-  } else if (appData.budgetDay <=0) {
+  } else if (this.budgetDay <=0) {
     return('Что то пошло не так');
   }
   },
   getInfoDeposit: function() {
-    if (appData.deposit) {
-      appData.percentDeposit = prompt('Какой годовой процент?', '10');
+    if (this.deposit) {
+      this.percentDeposit = prompt('Какой годовой процент?', '10');
 
-      while (isNaN(parseFloat(appData.percentDeposit))) {
-        appData.percentDeposit = prompt('Какой годовой процент?', '10');
+      while (isNaN(parseFloat(this.percentDeposit))) {
+        this.percentDeposit = prompt('Какой годовой процент?', '10');
       }
-      appData.moneyDeposit = prompt('Какая сумма заложена?', '10000');
+      this.moneyDeposit = prompt('Какая сумма заложена?', '10000');
 
-       while (isNaN(parseFloat(appData.moneyDeposit))) {
-        appData.moneyDeposit = prompt('Какая сумма заложена?', '10000');
+       while (isNaN(parseFloat(this.moneyDeposit))) {
+        this.moneyDeposit = prompt('Какая сумма заложена?', '10000');
       }
     }
   },
   calcSavedMoney:function () {
-    return appData.budgetMonth * periodSelect.value;
+    return this.budgetMonth * periodSelect.value;
+  },
+  reset: function () {
+    const inputAll = document.querySelectorAll('[type = "text"]'); 
+  inputAll.forEach(item => {
+      item.value = '';
+      item.disabled = false;
+  });
+     periodSelect.value = 1;
+     periodSelect.disabled = false;
+     periodAmount.textContent = 1;
+     buttonStart.style.display = 'block';
+     buttonStart.disabled = true;
+     btnCancel.style.display='none';
+
   }
 };
 
@@ -207,9 +221,9 @@ salaryAmount.addEventListener("input", () => {
   buttonStart.disabled = salaryAmount.value.trim() === '';
 });
 
-buttonStart.addEventListener('click', appData.start);
-
-
+//Привязка кнопки расчитать к appData
+let startBind = appData.start.bind(appData); 
+buttonStart.addEventListener('click', startBind);
 
 
 validator('.salary-amount', /[^0-9]/);
@@ -221,6 +235,25 @@ btnPlusIncome.addEventListener('click', appData.addIncomeBlock);
 btnPlusExpenses.addEventListener('click', appData.addExpensesBlock);
 periodSelect.addEventListener('input', appData.periodRange);
 
+
+//Блокирует input
+   const block = () => { 
+  const inputText = document.querySelectorAll('[type = "text"]'); 
+  inputText.forEach(item => {
+      item.disabled = true;
+  });
+};
+
+
+
+buttonStart.addEventListener('click', ()=> {
+  buttonStart.style.display = 'none';
+  btnCancel.style.display='block';
+  periodSelect.disabled = true;
+  block();
+});
+
+btnCancel.addEventListener('click', appData.reset);
 
 /*
 if (appData.getTargetMonth() > 0) {
