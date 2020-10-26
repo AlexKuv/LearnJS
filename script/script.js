@@ -26,6 +26,7 @@ const buttonStart = document.getElementById('start'),
  let periodAmount = document.querySelector('.period-amount');
 let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
+
  
 
 //Валидатор
@@ -206,14 +207,28 @@ let appData = {
       item.value = '';
       item.disabled = false;
   });
+     this.income = {};
+     this.addIncome = [];
+     this.expenses = {};
+     this.addExpenses = [];
+     this.incomeMonth = 0;
      periodSelect.value = 1;
-     periodSelect.disabled = false;
      periodAmount.textContent = 1;
      buttonStart.style.display = 'block';
      buttonStart.disabled = true;
      btnCancel.style.display='none';
-
-  }
+     if (incomeItems.length > 0){
+       btnPlusIncome.style.display = 'block';
+       incomeItems[0].remove();
+       incomeItems = document.querySelectorAll('.income-items');
+     }else if (incomeItems.length > 1){
+        btnPlusIncome.style.display = 'block';
+       incomeItems[0].remove();
+       incomeItems[1].remove();
+       incomeItems = document.querySelectorAll('.income-items');
+     }
+     }
+     
 };
 
 buttonStart.disabled = true;
@@ -249,12 +264,10 @@ periodSelect.addEventListener('input', appData.periodRange);
 buttonStart.addEventListener('click', ()=> {
   buttonStart.style.display = 'none';
   btnCancel.style.display='block';
-  periodSelect.disabled = true;
   block();
 });
 
 btnCancel.addEventListener('click', appData.reset);
-
 /*
 if (appData.getTargetMonth() > 0) {
   console.log('Цель будет достигнута за:', Math.ceil(appData.getTargetMonth()), 'мес');
