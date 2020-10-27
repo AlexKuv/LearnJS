@@ -25,7 +25,7 @@ DomElement.prototype.createDiv = function() {
         newDiv.style.cssText = ` 
       height:` + this.height + `px;`+ `width:`+ this.width + `px;`+ 
       `background :`+ this.bg + `;` +
-      `font-size:`+ this.fontSize + `px;`;
+      `font-size:`+ this.fontSize + `px;` + `position: absolute;`;
         document.body.prepend(newDiv);
   }
 }; 
@@ -33,14 +33,14 @@ DomElement.prototype.createDiv = function() {
 let newObj = new DomElement('.block', '100', '100','#A8E4A0');
 
 
-
 document.addEventListener('DOMContentLoaded', newObj.createDiv());
+
 
 document.addEventListener('keydown', (e) =>{
   let square = document.querySelector('.block');
   let left =0;
   let top =30;
-  if(e.code === 'ArrowRight'){
+  if(e.key === 'ArrowRight'){
     left += 10;
     square.style.left = left + 'px';
   }
@@ -57,34 +57,3 @@ document.addEventListener('keydown', (e) =>{
      square.style.top = top + 'px';
   }
 });
-
-
-
-
-
-
-
-
-
-
-/*
-document.onkeydown = function(e) {
-  let square = document.querySelector('.block');
-  let left =0;
-    switch (e.keyCode) {
-        case 37:
-           left += 10;
-           square.style.left = 10 + 'px';
-           break;
-        case 38:
-            console.log(e);
-            break;
-        case 39:
-            console.log(e);
-            break;
-        case 40:
-            console.log(e);
-            break;
-    }
-};
-*/
