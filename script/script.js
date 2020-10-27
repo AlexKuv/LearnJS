@@ -16,7 +16,7 @@ DomElement.prototype.createDiv = function() {
     newDiv.style.cssText = ` 
       height:` + this.height + `px;`+ `width:`+ this.width + `px;`+ 
       `background :`+ this.bg + `;` +
-      `font-size:`+ this.fontSize + `px;`;
+      `font-size:`+ this.fontSize + `px;` + `position: absolute;`;
     newDiv.textContent='Hello world';
     document.body.prepend(newDiv);
   } else if (this.selector[0] === '#') {
@@ -30,6 +30,61 @@ DomElement.prototype.createDiv = function() {
   }
 }; 
 
-let newObj = new DomElement('.block', '150', '150','#A8E4A0', '25');
+let newObj = new DomElement('.block', '100', '100','#A8E4A0');
 
-newObj.createDiv();
+
+
+document.addEventListener('DOMContentLoaded', newObj.createDiv());
+
+document.addEventListener('keydown', (e) =>{
+  let square = document.querySelector('.block');
+  let left =0;
+  let top =30;
+  if(e.code === 'ArrowRight'){
+    left += 10;
+    square.style.left = left + 'px';
+  }
+  if (e.code === 'ArrowLeft') {
+     left -= 10;
+     square.style.left = left + 'px';
+  }
+  if (e.code === 'ArrowDown') {
+     top += 10;
+     square.style.top = top + 'px';
+  }
+  if (e.code === 'ArrowUp') {
+     top -= 10;
+     square.style.top = top + 'px';
+  }
+});
+
+
+
+
+
+
+
+
+
+
+/*
+document.onkeydown = function(e) {
+  let square = document.querySelector('.block');
+  let left =0;
+    switch (e.keyCode) {
+        case 37:
+           left += 10;
+           square.style.left = 10 + 'px';
+           break;
+        case 38:
+            console.log(e);
+            break;
+        case 39:
+            console.log(e);
+            break;
+        case 40:
+            console.log(e);
+            break;
+    }
+};
+*/
