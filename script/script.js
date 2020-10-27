@@ -8,29 +8,28 @@ function DomElement (selector, height, width, bg, fontSize) {
   this.fontSize = fontSize;
 }
 
-
-/*
-let q = () => {
-  let a = prompt('qwe');
-  return a;
-};*/
-
-let newDiv = new DomElement ('.block');
-
-
-
 DomElement.prototype.createDiv = function() {
 
   if(this.selector[0] ==='.'){
     let newDiv = document.createElement("div");
     newDiv.classList.add(this.selector.substring(1));
+    newDiv.style.cssText = ` 
+      height:` + this.height + `px;`+ `width:`+ this.width + `px;`+ 
+      `background :`+ this.bg + `;` +
+      `font-size:`+ this.fontSize + `px;`;
+    newDiv.textContent='Hello world';
     document.body.prepend(newDiv);
   } else if (this.selector[0] === '#') {
         let newDiv = document.createElement("p");
         newDiv.id=this.selector.substring(1);
+        newDiv.style.cssText = ` 
+      height:` + this.height + `px;`+ `width:`+ this.width + `px;`+ 
+      `background :`+ this.bg + `;` +
+      `font-size:`+ this.fontSize + `px;`;
         document.body.prepend(newDiv);
   }
-
 }; 
 
-newDiv.createDiv();
+let newObj = new DomElement('.block', '150', '150','#A8E4A0', '25');
+
+newObj.createDiv();
