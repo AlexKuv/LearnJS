@@ -28,7 +28,6 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
 
  
-
 //Валидатор
     const validator = (selector, reg) => { 
   const helper = document.querySelectorAll(selector); 
@@ -57,12 +56,11 @@ class AppData {
     start(){
       this.budget = +salaryAmount.value;
       
-        
-      this.getExpenses();
-      this.getIncome();
+      this.getExpInc();  
       this.getExpensesMonth();
-      this.getAddExpenses();
-      this.getAddIncome();
+      this.getAddExpInc();
+      //this.getAddExpenses();
+      //this.getAddIncome();
         
       this.getBudget();
       this.getTargetMonth();
@@ -87,56 +85,42 @@ class AppData {
     periodAmount = document.querySelector('.period-amount');
     periodAmount.textContent = periodSelect.value;
   }
-addExpensesBlock() {
- 
-    let expensesItemClone = expensesItems[0].cloneNode(true);
-    expensesItems[0].parentNode.insertBefore(expensesItemClone, btnPlusExpenses);
-    expensesItemClone.querySelectorAll('input').forEach(i => i.value = '');
- 
-    expensesItems = document.querySelectorAll('.expenses-items');
-  
-    if (expensesItems.length === 3) {
-      btnPlusExpenses.style.display = 'none';
-    }
-      validator('[placeholder="Наименование"]', /[^а-яА-я]/);
-      validator('[placeholder="Сумма"]', /[^0-9]/);
-  }
- addIncomeBlock() {
-    let incomeItemsClone = incomeItems[0].cloneNode(true);
-    incomeItems[0].parentNode.insertBefore(incomeItemsClone, btnPlusIncome);
-    incomeItemsClone.querySelectorAll('input').forEach(i => i.value = '');
-    incomeItems = document.querySelectorAll('.income-items');
 
-    if (incomeItems.length === 3) {
-      btnPlusIncome.style.display = 'none';
-    }
-    validator('[placeholder="Наименование"]', /[^а-яА-я]/);
-    validator('[placeholder="Сумма"]', /[^0-9]/);
-  }
-  getExpenses() {
-    expensesItems.forEach(function(item){
-     let itemExpenses = item.querySelector('.expenses-title').value;
-     let cashExpenses = item.querySelector('.expenses-amount').value;
-     cashExpenses = Number(cashExpenses);
-     if(itemExpenses !== '' && cashExpenses !== '') {
-      this.expenses[itemExpenses] = cashExpenses;
-     }
-    },this);
-  }
-getIncome() {
-      incomeItems.forEach(function (item){
-        let itemIncome = item.querySelector('.income-title').value;
-        let cashIncome = item.querySelector('.income-amount').value;
-        cashIncome = Number(cashIncome);
-        if(itemIncome !== '' && cashIncome !== ''){
-          this.income[itemIncome] = cashIncome;
-        }
-      },this);
+addExpIncBlock(){
+const startStr = this.className.split(' ')[1].split('_')[0];
 
+  const btn = document.querySelectorAll(`.${startStr}_add`)[0];
+   let itemsItem = document.querySelectorAll(`.${startStr}-items`)[0];
+   const itemClone = itemsItem.cloneNode(true);
+    itemsItem.parentNode.insertBefore(itemClone, btn);
+    itemClone.querySelectorAll('input').forEach(i => i.value = '');
+    itemsItem = document.querySelectorAll(`.${startStr}-items`);
+
+    if (itemsItem.length === 3) {
+      btn.style.display = 'none';
+    }
+
+   validator('[placeholder="Наименование"]', /[^а-яА-я]/);
+  validator('[placeholder="Сумма"]', /[^0-9]/);
+}
+
+getExpInc(){
+
+const count = item => {
+  const startStr = item.className.split('-')[0];
+  const itemTitle = item.querySelector(`.${startStr}-title`).value;
+  const itemAMount = item.querySelector(`.${startStr}-amount`).value;
+    if(itemTitle !== '' && itemAMount !== ''){
+            this[startStr][itemTitle] = itemAMount;
+    }
+}; 
+
+  incomeItems.forEach(count);
+  expensesItems.forEach(count);
       for (let key in this.income){
-        this.incomeMonth += +this.income[key];
+         this.incomeMonth += +this.income[key];
       }
-  }
+}
 getAddExpenses() {
     const _this = this;
     let addExpenses = additionalExpensesItem.value.split(',');
@@ -156,12 +140,20 @@ getAddIncome() {
       }
     });
   }
+getAddExpInc(){
+    let count = item => {
+      item = this;
+      const str = item.className;
+      console.log('str: ', str);
+    };
+    count();
+}
 getExpensesMonth() {
 
   let rez = 0;
 
   for (let key in this.expenses ) {
-    rez += this.expenses[key];
+    rez += +this.expenses[key];
   }
   this.expensesMonth = rez;
   return rez;
@@ -246,12 +238,8 @@ reset() {
   const startBind = appData.start.bind(appData); 
   buttonStart.addEventListener('click', startBind);
 
-
-  const addIncomeBlockBinde = appData.addIncomeBlock.bind(appData);
-  btnPlusIncome.addEventListener('click', addIncomeBlockBinde);
-
-  const addExpensesBlockBinde = appData.addExpensesBlock.bind(appData);
-  btnPlusExpenses.addEventListener('click', addExpensesBlockBinde);
+  btnPlusIncome.addEventListener('click', this.addExpIncBlock);
+  btnPlusExpenses.addEventListener('click', this.addExpIncBlock);
 
   const periodRangeBind = appData.periodRange.bind(appData);
   periodSelect.addEventListener('input', periodRangeBind);
@@ -277,9 +265,8 @@ reset() {
 
 const appData = new AppData ();
 
-
 validator('.salary-amount', /[^0-9]/);
 validator('[placeholder="Наименование"]', /[^а-яА-я]/);
 validator('[placeholder="Сумма"]', /[^0-9]/);
 
- appData.addEventListeners();   
+appData.addEventListeners();   
