@@ -14,7 +14,7 @@ const buttonStart = document.getElementById('start'),
  btnPlusIncome = document.getElementsByTagName('button')[0],
  btnPlusExpenses = document.getElementsByTagName('button')[1],
  depositCheck = document.querySelector('#deposit-check'),
- additionalIncomeItem = document.querySelector('.additional_income-item'),
+ additionalIncomeItem = document.querySelectorAll('.additional_income-item'),
  budgetMonthValue = document.getElementsByClassName('budget_month-value')[0],
  budgetDayValue = document.getElementsByClassName('budget_day-value')[0],
  expensesMonthValue = document.getElementsByClassName('expenses_month-value')[0],
@@ -27,9 +27,6 @@ const buttonStart = document.getElementById('start'),
 let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
 
- let a = document.querySelectorAll('.a');
- 
- console.log('a: ', a);
 //Валидатор
     const validator = (selector, reg) => { 
   const helper = document.querySelectorAll(selector); 
@@ -150,8 +147,10 @@ const count = item => {
     : addBudget = additionalIncomeItem;
     addBudget.forEach(item => {
       let itemValue = type ? item.trim() : item.value.trim();
-      !itemValue ?? this[place].push(itemValue);
-    })
+       if (itemValue !== '') {
+        this[place].push(itemValue);
+       }
+    });
   }
 getExpensesMonth() {
 
