@@ -8,7 +8,7 @@ const buttonStart = document.getElementById('start'),
  incomeAmount = document.querySelector('.income-items .income-amount'),
  expensesTitle = document.querySelector('.expenses-items .expenses-title'),
  expensesAmount = document.querySelector('.expenses-items .expenses-amount'),
- additionalExpensesItem = document.querySelector('.additional_expenses-item'),
+ additionalExpensesItem = document.querySelectorAll('.additional_expenses-item'),
  targetAmount = document.querySelector('.target-amount'),
  periodSelect = document.querySelector('.period-select'),
  btnPlusIncome = document.getElementsByTagName('button')[0],
@@ -27,7 +27,9 @@ const buttonStart = document.getElementById('start'),
 let expensesItems = document.querySelectorAll('.expenses-items'),
     incomeItems = document.querySelectorAll('.income-items');
 
+ let a = document.querySelectorAll('.a');
  
+ console.log('a: ', a);
 //Валидатор
     const validator = (selector, reg) => { 
   const helper = document.querySelectorAll(selector); 
@@ -55,10 +57,10 @@ class AppData {
   }
     start(){
       this.budget = +salaryAmount.value;
-      
+      this.getAddExpInc();
       this.getExpInc();  
       this.getExpensesMonth();
-      this.getAddExpInc();
+      
       //this.getAddExpenses();
       //this.getAddIncome();
         
@@ -141,12 +143,24 @@ getAddIncome() {
     });
   }
 getAddExpInc(){
-    let count = item => {
-      item = this;
-      const str = item.className;
-      console.log('str: ', str);
+    const count =item => {
+      const str = item.className.split('_')[1].split('-')[0];
+        let expInc= document.querySelectorAll(`.additional_${str}-item`)[0];
+      if(str === 'income' && expInc.value !== ''){
+        for (let i = 0; i<2; i++){
+        expInc = document.querySelectorAll(`.additional_${str}-item`)[i];
+        this.addIncome.push(expInc.value);
+        }
+      }else if (str === 'expenses' && expInc.value !== '') {
+          
+        this.addExpenses.push(expInc.value);
+      }
+      console.log(this);
     };
-    count();
+      
+    a.forEach(count);
+    //additionalIncomeItem.forEach(count);
+    //additionalExpensesItem.forEach(count);
 }
 getExpensesMonth() {
 
