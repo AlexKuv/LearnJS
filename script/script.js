@@ -56,13 +56,8 @@ class AppData {
       this.budget = +salaryAmount.value;
       this.getAddExpInc('addExpenses', true);
       this.getAddExpInc('addIncome', false);  
-      //this.getAddExpInc();
-      this.getExpInc();  
-     // this.getExpensesMonth();
-      
-      //this.getAddExpenses();
-      //this.getAddIncome();
 
+      this.getExpInc();  
       this.getBudget();
       this.getTargetMonth();
       this.showResult();
@@ -122,25 +117,6 @@ const count = item => {
          this.incomeMonth += +this.income[key];
       }
 }
-/*getAddExpenses() {
-    const _this = this;
-    let addExpenses = additionalExpensesItem.value.split(',');
-    addExpenses.forEach(function(item) {
-      item = item.trim();
-      if (item !== '') {
-        _this.addExpenses.push(item);
-      }
-    });
-  }
-/*getAddIncome() {
-    const _this = this;
-    additionalIncomeItem.forEach(function(item){
-      let itemValue = item.value.trim();
-      if(item.value !== ''){
-        _this.addIncome.push(itemValue);
-      }
-    });
-  }*/
   getAddExpInc(place, type) {
     let addBudget;
     type ? addBudget = additionalExpensesItem.value.split(',') 
