@@ -218,16 +218,17 @@ changePercent(){
     depositPercent.style.display = 'inline-block';
 
     depositPercent.addEventListener('input', () =>{
-      if (depositPercent.value >= 100 || depositPercent.value <= 0){
+      if (depositPercent.value > 100 || depositPercent.value < 0){
         alert('Введите корректные данные в поле проценты!');
-        buttonStart.disabled = true;
+        depositPercent.value = '';
+        //buttonStart.disabled = true;
         return;
-      }else {
-        buttonStart.disabled = salaryAmount.value.trim() === '';
-      }
+      }//else {
+     //   buttonStart.disabled = salaryAmount.value.trim() === '';
+     // }
     });
     depositPercent.value = valueSelect;
-    validator('[placeholder="Процент"]', /[^0-9]/);
+    validator('[placeholder="Процент"]', /[^0-9 + '.']/);
   }else {
     depositPercent.value = valueSelect;
     depositPercent.style.display = 'none';
@@ -286,6 +287,7 @@ depositHeandler() {
 }
 
 const appData = new AppData ();
+
 
 validator('.salary-amount', /[^0-9]/);
 validator('[placeholder="Наименование"]', /[^а-яА-я]/);
