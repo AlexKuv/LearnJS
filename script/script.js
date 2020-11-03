@@ -62,7 +62,6 @@ const toggleMenu =  () => {
 toggleMenu();
 
 //popup
-
 const togglePopUp = () => {
   const popup = document.querySelector('.popup'),
   popupBtn = document.querySelectorAll('.popup-btn'),
@@ -95,7 +94,30 @@ const togglePopUp = () => {
 };
 togglePopUp();
 
+//плавная прокрутка
+const smoothScrolling = () => {
+  const serviceBlock = document.querySelector('#service-block'),
+  aService = document.querySelector('a'),
+  menu = document.querySelector('menu'),
+  menuItem = menu.querySelectorAll('ul>li');
 
+menuItem.forEach((elem) => {
+ let a =  elem.children[0];
+ let atributes = a.getAttribute('href');
+ elem.addEventListener('click', (e) => {
+  e.preventDefault();
+  let elemLink = document.querySelector(`${atributes}`);
+  elemLink.scrollIntoView({behavior: "smooth", block: 'start'});
+ 
+ });
+});
+
+aService.addEventListener('click', (e) => {
+  e.preventDefault();
+  serviceBlock.scrollIntoView({behavior: "smooth", block: 'start'});
+});
+};
+smoothScrolling();
 
 
 
