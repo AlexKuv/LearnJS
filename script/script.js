@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 //Timer
 let idInterval;
-const countTimer = function (deadLine) {
+const countTimer =  (deadLine) => {
   let timerHours = document.querySelector('#timer-hours'),
       timerMinutes = document.querySelector('#timer-minutes'),
       timerSeconds = document.querySelector('#timer-seconds');
@@ -40,6 +40,72 @@ const countTimer = function (deadLine) {
     };
    idInterval = setInterval(updateClock,1000);
 };
+countTimer('06 november 2020');
 
-countTimer('01 november 2020');
+//Menu
+const toggleMenu =  () => {
+  const btnMenu = document.querySelector('.menu'),
+        menu = document.querySelector('menu'),
+        closeBtn = document.querySelector('.close-btn'),
+        menuItem = menu.querySelectorAll('ul>li');
+        
+  
+  const heandlerMenu = () => {
+    menu.classList.toggle('active-menu');
+  };
+
+  btnMenu.addEventListener('click',heandlerMenu);
+  closeBtn.addEventListener('click',heandlerMenu);
+  menuItem.forEach((elem) => elem.addEventListener('click', heandlerMenu));
+        
+};
+toggleMenu();
+
+//popup
+
+const togglePopUp = () => {
+  const popup = document.querySelector('.popup'),
+  popupBtn = document.querySelectorAll('.popup-btn'),
+  popUpClose = document.querySelector('.popup-close'),
+  popUpContent = document.querySelector('.popup-content');
+
+  popupBtn.forEach((elem) => {
+    elem.addEventListener('click', () =>{
+    let count =0 ;
+    if(screen.width > 768){
+      let popupAnimate = () =>{
+        popup.style.display = 'block';
+        count++;
+        if(count < 30){
+        popUpContent.style.top = count * 4 + 'px';
+        } else {
+        clearInterval(popupStop);
+        } 
+    };
+    let popupStop =   setInterval(popupAnimate,1);
+    } else {
+      popup.style.display = 'block';
+    }
+    });
+  });
+
+  popUpClose.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+};
+togglePopUp();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
