@@ -1,7 +1,9 @@
 window.addEventListener('DOMContentLoaded', function(){
 'use strict';
 
+
 //Timer
+let idInterval;
 const countTimer = function (deadLine) {
   let timerHours = document.querySelector('#timer-hours'),
       timerMinutes = document.querySelector('#timer-minutes'),
@@ -28,14 +30,15 @@ const countTimer = function (deadLine) {
           timerSeconds.textContent = ('0' + timer.seconds.toString()).slice(-2);
 
       if (timer.seconds < 0) {
-        timerHours.textContent = '00';
+
+        clearInterval(idInterval);
+          timerHours.textContent = '00';
           timerMinutes.textContent = '00';
           timerSeconds.textContent = '00';
       }
-          
-    };
 
-  setInterval(updateClock,1000);
+    };
+   idInterval = setInterval(updateClock,1000);
 };
 
 countTimer('01 november 2020');
