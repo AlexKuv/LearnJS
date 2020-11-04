@@ -44,25 +44,27 @@ countTimer('06 november 2020');
 
 //Menu
 const toggleMenu =  () => {
-  const btnMenu = document.querySelector('.menu'),
-        menu = document.querySelector('menu');  
-  
+  const menu = document.querySelector('menu'),
+  btnMenu = document.querySelector('.menu');  
+
   const heandlerMenu = () => {
     menu.classList.toggle('active-menu');
   };
 
-  btnMenu.addEventListener('click',heandlerMenu);
-  menu.addEventListener('click', (event) => {
+  document.addEventListener('click',(event) => {
     let target = event.target;
-    if(target.classList.contains('close-btn')){
+    
+    if(target.closest('.menu')){
       heandlerMenu();
-    }else {
-      target = target.closest('menu>ul>li>a');
-      if(target){
+    } else if(target.classList.contains('close-btn')){
       heandlerMenu();
-      }
+    }else if(!target.closest('menu')){
+      menu.classList.remove('active-menu');
+    }else if(target.closest('menu>ul>li>a')){
+      heandlerMenu();
     }
-  });    
+  });
+
 };
 toggleMenu();
 
