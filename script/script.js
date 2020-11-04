@@ -47,7 +47,7 @@ const toggleMenu =  () => {
   const btnMenu = document.querySelector('.menu'),
         menu = document.querySelector('menu'),
         closeBtn = document.querySelector('.close-btn'),
-        menuItem = menu.querySelectorAll('ul>li');
+        menuItem = menu.querySelectorAll('ul>li>a');
         
   
   const heandlerMenu = () => {
@@ -99,11 +99,10 @@ const smoothScrolling = () => {
   const serviceBlock = document.querySelector('#service-block'),
   aService = document.querySelector('a'),
   menu = document.querySelector('menu'),
-  menuItem = menu.querySelectorAll('ul>li');
+  menuItem = menu.querySelectorAll('ul>li>a');
 
 menuItem.forEach((elem) => {
- let a =  elem.children[0];
- let atributes = a.getAttribute('href');
+ let atributes = elem.getAttribute('href');
  elem.addEventListener('click', (e) => {
   e.preventDefault();
   let elemLink = document.querySelector(`${atributes}`);
