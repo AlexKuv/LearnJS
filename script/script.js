@@ -57,7 +57,7 @@ const toggleMenu =  () => {
     if(target.classList.contains('close-btn')){
       heandlerMenu();
     }else {
-      target = target.closest('menu>ul>li');
+      target = target.closest('menu>ul>li>a');
       if(target){
       heandlerMenu();
       }
@@ -115,11 +115,11 @@ const smoothScrolling = () => {
   const serviceBlock = document.querySelector('#service-block'),
   aService = document.querySelector('a'),
   menu = document.querySelector('menu'),
-  menuItem = menu.querySelectorAll('ul>li');
+  menuItem = menu.querySelectorAll('ul>li>a');
+ 
 
 menuItem.forEach((elem) => {
- let a =  elem.children[0];
- let atributes = a.getAttribute('href');
+ let atributes = elem.getAttribute('href');
  elem.addEventListener('click', (e) => {
   e.preventDefault();
   let elemLink = document.querySelector(`${atributes}`);
