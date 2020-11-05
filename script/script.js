@@ -38,9 +38,10 @@ const countTimer =  (deadLine) => {
       }
 
     };
+    updateClock();
    idInterval = setInterval(updateClock,1000);
 };
-countTimer('06 november 2020');
+countTimer('07 november 2020');
 
 //Menu
 const toggleMenu =  () => {
