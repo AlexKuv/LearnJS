@@ -74,7 +74,7 @@ const togglePopUp = () => {
   const popup = document.querySelector('.popup'),
   popupBtn = document.querySelectorAll('.popup-btn'),
   popUpContent = document.querySelector('.popup-content');
-
+ 
   popupBtn.forEach((elem) => {
     let popupStop;
     elem.addEventListener('click', () =>{
@@ -276,12 +276,47 @@ slider.addEventListener('mouseout', (event) => {
     startSlide();
   }
 });
-
 startSlide();
-
 };
 
 slider();
+
+// Замена картинок "Наша команда" на картинки из data при наведениии
+const replaceRow = () => {
+  const sectionCommand = document.getElementById('command'),
+        commandImg = sectionCommand.querySelectorAll('.command__photo');
+        
+
+   commandImg.forEach((item) => {
+     let replaceSrc = item.src;
+
+     item.addEventListener('mouseenter', (event) => {
+        event.target.src = event.target.dataset.img;
+   });
+      item.addEventListener('mouseleave' , (event) => {
+        event.target.src = replaceSrc;
+      });
+});
+
+};
+replaceRow();
+
+//Валидатор для калькулятора
+
+const calcValidator = () => {
+  const calcItem = document.querySelectorAll('.calc-block>input');
+
+    calcItem.forEach((item) => {
+
+      item.addEventListener('input' , () => {
+        item.value = item.value.replace(/[^0-9]/g, '');
+      });
+      
+    });
+
+};
+
+calcValidator();
 
 
 
