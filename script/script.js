@@ -344,18 +344,27 @@ const countSum = () => {
      total = price * typeValue * squareValue * countValue * dayValue;
    } 
 
-  //totalValue.textContent = total;
 
 //анимация вывода
  let count = 0;
+ let stopAnimate;
 const calcAnimate = () => {
 
-  if (count < total){
+  if (count < total && total < 1500){
     count += 50;
-     totalValue.textContent = count;
+       totalValue.textContent = count ;
+  }else if (count < total && total < 15000){
+     count += 250;
+       totalValue.textContent = count ;
+  }else if (count < total && total > 15000){
+     count += 750 ;
+       totalValue.textContent = count ;
+  }else if (count > total){
+    clearInterval(stopAnimate);
+    totalValue.textContent = Math.floor(total);
   }
 };
-setInterval(calcAnimate, 10);
+stopAnimate = setInterval(calcAnimate, 5);
 
 };
 
