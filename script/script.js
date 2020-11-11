@@ -320,8 +320,8 @@ const calc = (price = 100) => {
     calcType = document.querySelector('.calc-type'),
     calcSquare = document.querySelector('.calc-square'),
     calcDay = document.querySelector('.calc-day'),
-    calcCount = document.querySelector('.calc-count'),
-    totalValue = document.getElementById('total');
+    calcCount = document.querySelector('.calc-count');
+   let totalValue = document.getElementById('total');
 
 const countSum = () => {
   let total = 0,
@@ -344,7 +344,18 @@ const countSum = () => {
      total = price * typeValue * squareValue * countValue * dayValue;
    } 
 
-  totalValue.textContent = total;
+  //totalValue.textContent = total;
+
+//анимация вывода
+ let count = 0;
+const calcAnimate = () => {
+
+  if (count < total){
+    count += 50;
+     totalValue.textContent = count;
+  }
+};
+setInterval(calcAnimate, 10);
 
 };
 
@@ -356,6 +367,7 @@ const countSum = () => {
     });
 };
 calc(100);
+
 
 
 
