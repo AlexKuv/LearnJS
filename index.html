@@ -409,5 +409,61 @@
 	</div>
 </div>
 
+
+<script src="plugins/validator.js"></script>
+
+<script>
+	const validForm1 = new Validator({
+			selector: '#form1',
+		pattern: {
+      name: /^[а-яА-ЯёЁ]+$/,
+    },
+		method: {
+      'form1-name': [
+        ['notEmpty'],
+        ['pattern', 'name']
+			],
+			'form1-phone': [
+        ['notEmpty'],
+        ['pattern', 'phone']
+      ],
+      'form1-email': [
+        ['notEmpty'],
+        ['pattern', 'email']
+      ],
+		},
+
+	})
+validForm1.init();
+
+const validForm2 = new Validator({
+			selector: '#form2',
+		pattern: {
+			name: /^[а-яА-ЯёЁ]+$/,
+			message: /^[?!,.а-яА-ЯёЁ0-9\s]+$/,
+    },
+		method: {
+      'form2-name': [
+        ['notEmpty'],
+        ['pattern', 'name']
+			],
+			'form2-phone': [
+        ['notEmpty'],
+        ['pattern', 'phone']
+      ],
+      'form2-email': [
+        ['notEmpty'],
+        ['pattern', 'email']
+			],
+			'form2-message': [
+        ['notEmpty'],
+        ['pattern', 'message']
+      ],
+		},
+
+	})
+validForm2.init();
+</script>
+
 </body>
 </html>
