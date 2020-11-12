@@ -392,42 +392,42 @@ const sendForm = () => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     form.appendChild(statusMessage);
+    statusMessage.textContent = loadMessage;
+    const formData = new FormData(form);
+      let body = {};
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+    postData(body, () => {
+      statusMessage.textContent = successMessage;
+    }, (error) => {
+      statusMessage.textContent = errorMessage;
+      console.error(error);
+    });
 
-    const request = new XMLHttpRequest();
+  });
+
+const postData = (body, outputData, errorData) => {
+      const request = new XMLHttpRequest();
 
     request.addEventListener('readystatechange', () => {
-      statusMessage.textContent = loadMessage;
-
+      
       if(request.readyState !== 4) {
        return;
       }
-
       if(request.status === 200) {
-        statusMessage.textContent = successMessage;
+        outputData();
       } else {
-        statusMessage.textContent = errorMessage;
+        errorData(request.status);     
       }
     });
 
       request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'multipart/form-data');
-      const formData = new FormData(form);
-      let body = {};
-
-      for (let val of formData.entries()){
-        body[val[0]] = val[1];
-      }
+      request.setRequestHeader('Content-Type', 'application/json');
+      request.send(JSON.stringify(body));
+  };
 
 
-      console.log(body);
-
-
-
-      request.send(formData);
-
-
-
-  });
 };
 sendForm();
 
