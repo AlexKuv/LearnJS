@@ -412,6 +412,17 @@ const sendForm = () => {
       request.open('POST', './server.php');
       request.setRequestHeader('Content-Type', 'multipart/form-data');
       const formData = new FormData(form);
+      let body = {};
+
+      for (let val of formData.entries()){
+        body[val[0]] = val[1];
+      }
+
+
+      console.log(body);
+
+
+
       request.send(formData);
 
 
