@@ -41,7 +41,7 @@ const countTimer =  (deadLine) => {
     updateClock();
    idInterval = setInterval(updateClock,1000);
 };
-countTimer('07 november 2020');
+countTimer('15 november 2020');
 
 //Menu
 const toggleMenu =  () => {
@@ -377,8 +377,48 @@ stopAnimate = setInterval(calcAnimate, 5);
 };
 calc(100);
 
+//send-ajax-form
+
+const sendForm = () => {
+  const errorMessage = 'Что-то пошло не так...',
+    loadMessage = 'Загрузка...',
+    successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+  
+  const form = document.getElementById('form1');
+
+  const statusMessage = document.createElement('div');
+  statusMessage.style.cssText = 'font-size: 2rem';
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    form.appendChild(statusMessage);
+
+    const request = new XMLHttpRequest();
+
+    request.addEventListener('readystatechange', () => {
+      statusMessage.textContent = loadMessage;
+
+      if(request.readyState !== 4) {
+       return;
+      }
+
+      if(request.status === 200) {
+        statusMessage.textContent = successMessage;
+      } else {
+        statusMessage.textContent = errorMessage;
+      }
+    });
+
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'multipart/form-data');
+      const formData = new FormData(form);
+      request.send(formData);
 
 
+
+  });
+};
+sendForm();
 
 
 
