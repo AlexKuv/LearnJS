@@ -377,6 +377,16 @@ stopAnimate = setInterval(calcAnimate, 5);
 };
 calc(100);
 
+  //Валидатор
+    const validator = (selector,reg) => { 
+  const helper = document.querySelectorAll(selector); 
+  helper.forEach(item => {
+    item.addEventListener('input', () => {
+      item.value = item.value.replace(reg, "");
+    });
+  });
+};
+
 //send-ajax-form
 
 const sendForm = () => {
@@ -385,27 +395,41 @@ const sendForm = () => {
     successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
   
   const form = document.getElementById('form1');
+  const formAll = document.querySelectorAll('form');
+
 
   const statusMessage = document.createElement('div');
-  statusMessage.style.cssText = 'font-size: 2rem';
+  statusMessage.style.cssText = `
+  font-size: 2rem;
+  color: #fff;
+  `;
 
-  form.addEventListener('submit', (event) => {
+  formAll.forEach((item) => {
+
+  item.addEventListener('submit', (event) => {
     event.preventDefault();
-    form.appendChild(statusMessage);
+
+    item.appendChild(statusMessage);
     statusMessage.textContent = loadMessage;
-    const formData = new FormData(form);
+    const formData = new FormData(item);
       let body = {};
       formData.forEach((val, key) => {
         body[key] = val;
       });
     postData(body, () => {
       statusMessage.textContent = successMessage;
+      item.querySelectorAll('input').forEach(i => i.value = '');
     }, (error) => {
       statusMessage.textContent = errorMessage;
+      item.querySelectorAll('input').forEach(i => i.value = '');
       console.error(error);
     });
-
   });
+
+
+    
+});
+
 
 const postData = (body, outputData, errorData) => {
       const request = new XMLHttpRequest();
@@ -426,7 +450,10 @@ const postData = (body, outputData, errorData) => {
       request.setRequestHeader('Content-Type', 'application/json');
       request.send(JSON.stringify(body));
   };
-
+  
+validator('.form-phone', /[^0-9+]/);
+validator('[placeholder="Ваше имя"]', /[^а-яА-Я]/);
+validator('#form2-message', /[^а-яА-Я\s\,\.]/);
 
 };
 sendForm();
