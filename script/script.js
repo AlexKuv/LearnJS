@@ -397,7 +397,6 @@ const sendForm = () => {
   const form = document.getElementById('form1');
   const formAll = document.querySelectorAll('form');
 
-
   const statusMessage = document.createElement('div');
   statusMessage.style.cssText = `
   font-size: 2rem;
@@ -410,20 +409,23 @@ const sendForm = () => {
     event.preventDefault();
 
     item.appendChild(statusMessage);
-    statusMessage.textContent = loadMessage;
+    statusMessage.classList.add('sk-plane');
     const formData = new FormData(item);
       let body = {};
       formData.forEach((val, key) => {
         body[key] = val;
       });
     postData(body, () => {
+      statusMessage.classList.remove('sk-plane');
       statusMessage.textContent = successMessage;
       item.querySelectorAll('input').forEach(i => i.value = '');
     }, (error) => {
+      statusMessage.classList.remove('sk-plane');
       statusMessage.textContent = errorMessage;
       item.querySelectorAll('input').forEach(i => i.value = '');
       console.error(error);
     });
+    statusMessage.textContent = '';
   });
 
 
