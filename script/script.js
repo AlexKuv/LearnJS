@@ -425,10 +425,11 @@ const sendForm = () => {
       console.error(error);
     });
     statusMessage.textContent = '';
+      setTimeout(() => {
+        item.removeChild(statusMessage);
+      },5000);
   });
-
-
-    
+     
 });
 
 
@@ -454,7 +455,7 @@ const postData = (body, outputData, errorData) => {
   
 validator('.form-phone', /[^0-9+]/);
 validator('[placeholder="Ваше имя"]', /[^а-яА-Я]/);
-validator('#form2-message', /[^а-яА-Я\s\,\.]/);
+validator('#form2-message', /[^а-яА-Я\s\,\.\?\!\-\;\:]/);
 
 };
 sendForm();
