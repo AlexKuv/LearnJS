@@ -414,7 +414,13 @@ const sendForm = () => {
         body[key] = val;
       });
 
-    fetch('./server.php')
+    fetch('./server.php', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
       .then((response) => {
         if(response.status === 200) {
           statusMessage.classList.remove('sk-plane');
