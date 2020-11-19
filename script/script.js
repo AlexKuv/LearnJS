@@ -413,17 +413,24 @@ const sendForm = () => {
       formData.forEach((val, key) => {
         body[key] = val;
       });
-    postData(body)
-    .then( () => {
-      statusMessage.classList.remove('sk-plane');
-      statusMessage.textContent = successMessage;
-      item.querySelectorAll('input').forEach(i => i.value = '');
-    }, (error) => {
-      statusMessage.classList.remove('sk-plane');
-      statusMessage.textContent = errorMessage;
-      item.querySelectorAll('input').forEach(i => i.value = '');
-      console.error(error);
-    });
+
+    fetch('./server.php')
+      .then((response) => {
+        if(response.status === 200) {
+          statusMessage.classList.remove('sk-plane');
+          statusMessage.textContent = successMessage;
+          item.querySelectorAll('input').forEach(i => i.value = '');
+        } else {
+          statusMessage.classList.remove('sk-plane');
+          statusMessage.textContent = errorMessage;
+          item.querySelectorAll('input').forEach(i => i.value = '');
+          console.error(response.status);
+        }
+      })
+      .catch((error) => {
+          console.error(error);
+      });
+
     statusMessage.textContent = '';
       setTimeout(() => {
         item.removeChild(statusMessage);
@@ -432,29 +439,6 @@ const sendForm = () => {
      
 });
 
-
-const postData = (body) => {
-      return new Promise ((resolve,reject) => {
-        const request = new XMLHttpRequest();
-
-      request.addEventListener('readystatechange', () => {
-      
-        if(request.readyState !== 4) {
-        return;
-        }
-        if(request.status === 200) {
-          resolve();
-        } else {
-          reject(request.status);     
-        }
-      });
-
-        request.open('POST', './server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify(body));
-      });
-  };
-  
 validator('.form-phone', /[^0-9+]/);
 validator('[placeholder="Ваше имя"]', /[^а-яА-Я]/);
 validator('#form2-message', /[^а-яА-Я\s\,\.\?\!\-\;\:]/);
