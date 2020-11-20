@@ -42,6 +42,9 @@ const countSum = () => {
    if(typeValue && squareValue) {
      total = price * typeValue * squareValue * countValue * dayValue;
    } 
+   if(calcSquare.value === ''){
+     totalValue.textContent = 0;
+   }
 
 
 //анимация вывода
@@ -62,9 +65,11 @@ const calcAnimate = () => {
     clearInterval(stopAnimate);
     totalValue.textContent = Math.floor(total);
   }
+  calcType.addEventListener('input' , () => {
+    totalValue.textContent = 0 ;
+  });
 };
 stopAnimate = setInterval(calcAnimate, 5);
-
 };
 
     calcBlock.addEventListener('change', (event) => {

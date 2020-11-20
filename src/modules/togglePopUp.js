@@ -2,7 +2,9 @@ const togglePopUp = () => {
   const popup = document.querySelector('.popup'),
   popupBtn = document.querySelectorAll('.popup-btn'),
   popUpContent = document.querySelector('.popup-content');
- 
+  let form3 = document.getElementById('form3');
+  let modalInput = form3.querySelectorAll('input');
+
   popupBtn.forEach((elem) => {
     let popupStop;
     elem.addEventListener('click', () =>{
@@ -28,10 +30,12 @@ const togglePopUp = () => {
     let target = event.target;
 
     if(target.classList.contains('popup-close')){
+      modalInput.forEach(i => i.value = '');
       popup.style.display = 'none';
     }else {
       target = target.closest('.popup-content');
       if(!target){
+      modalInput.forEach(i => i.value = '');
       popup.style.display = 'none';
       }
     }

@@ -60,9 +60,14 @@ const sendForm = () => {
       setTimeout(() => {
         item.removeChild(statusMessage);
       },5000);
+    const popup = document.querySelector('.popup');
+      setTimeout(() => {
+        popup.style.display = 'none';
+      },5000);
   });
      
 });
+
 
 validator('.form-phone', /[^0-9+]/);
 validator('[placeholder="Ваше имя"]', /[^а-яА-Я]/);
