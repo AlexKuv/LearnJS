@@ -23,8 +23,8 @@ calcValidator();
 
 
 const countSum = () => {
-  let total = 0,
-  countValue = 1,
+  let total = 0;
+  let countValue = 1,
   dayValue = 1;
   const typeValue = calcType.options[calcType.selectedIndex].value,
    squareValue = +calcSquare.value;
@@ -42,6 +42,9 @@ const countSum = () => {
    if(typeValue && squareValue) {
      total = price * typeValue * squareValue * countValue * dayValue;
    } 
+   if(calcSquare.value === ''){
+     totalValue.textContent = 0;
+   }
 
 
 //анимация вывода
@@ -62,8 +65,18 @@ const calcAnimate = () => {
     clearInterval(stopAnimate);
     totalValue.textContent = Math.floor(total);
   }
+  calcType.addEventListener('input' , () => {
+    totalValue.textContent = 0 ;
+  });
 };
 stopAnimate = setInterval(calcAnimate, 5);
+
+    calcBlock.addEventListener('change', (event) => {
+      const target = event.target;
+      if (target.matches('select') || target.matches('input')){
+        total = 0;
+      }
+    });
 
 };
 
