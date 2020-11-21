@@ -22,6 +22,24 @@ const sendForm = () => {
 
   formAll.forEach((item) => {
 
+       let inputValid = item.querySelectorAll('input');
+    inputValid.forEach((elem) => {
+      elem.addEventListener('input', (e) => {
+        if(elem.matches('.form-phone')){
+             elem.value = elem.value.replace(/[^+0-9]/,  ''); 
+          if(elem.value.length > 11){
+            elem.value = elem.value.substring(12, '');
+          }
+        }else if (elem.matches('[placeholder="Ваше имя"]')){
+          elem.value = elem.value.replace(/[^а-яА-Я]/,  '');
+        }else if (elem.matches('#form2-message')){
+          elem.value = elem.value.replace(/[^а-яА-Я\s\,\.\?\!\-\;\:]/,  '');
+        }else if (elem.matches('.form-email')){
+          elem.value = elem.value.replace(/^\w+@\w+\.\w{2,}$/,  '');
+        }
+      });
+    });
+
   item.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -68,10 +86,12 @@ const sendForm = () => {
      
 });
 
-
-validator('.form-phone', /[^0-9+]/);
-validator('[placeholder="Ваше имя"]', /[^а-яА-Я]/);
-validator('#form2-message', /[^а-яА-Я\s\,\.\?\!\-\;\:]/);
+// validator('.form-phone', /[^0-9]/);
+// validator('.form-phone', /\d{12}/);
+// //validator('.form-phone', /^\+?[78]([-()]*\d){10}$/);
+// //validator('.form-phone', /[^+7\(\d{3}\)\d{3}-\d{2}-\d{2}]/);
+// validator('[placeholder="Ваше имя"]', /[^а-яА-Я]/);
+// validator('#form2-message', /[^а-яА-Я\s\,\.\?\!\-\;\:]/);
 
 };
 
