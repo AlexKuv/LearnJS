@@ -28,8 +28,10 @@ const sendForm = () => {
       elem.addEventListener('input', (e) => {
         if(elem.matches('.form-phone')){
              elem.value = elem.value.replace(/[^+0-9]/,  ''); 
-          if(elem.value.length > 11 || elem.value.length < 5){
-            elem.value = elem.value.substring(12, '');
+          if(elem.value.length > 12 || elem.value.length < 5){
+            buttons[0].disabled = true;
+          }else { 
+            buttons[0].disabled = false;
           }
         }else if (elem.matches('[placeholder="Ваше имя"]')){
 
