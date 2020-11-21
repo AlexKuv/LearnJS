@@ -23,12 +23,13 @@ const sendForm = () => {
   formAll.forEach((item) => {
     let buttons = item.querySelectorAll('.form-btn');
 
-       let inputValid = item.querySelectorAll('input');
-    inputValid.forEach((elem) => {
-      elem.addEventListener('input', (e) => {
+    let inputValid = item.querySelectorAll('input');
+      inputValid.forEach((elem) => {
+        elem.addEventListener('input', (e) => {
         if(elem.matches('.form-phone')){
-             elem.value = elem.value.replace(/[^+0-9]/,  ''); 
-          if(elem.value.length > 12 || elem.value.length < 5){
+          let reg = /^\+?[78]([-()]*\d){10}$/;
+             elem.value = elem.value.replace(/[^+0-9()-]/,  ''); 
+          if(!reg.test(elem.value)){
             buttons[0].disabled = true;
           }else { 
             buttons[0].disabled = false;
