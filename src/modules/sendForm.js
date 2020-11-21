@@ -21,22 +21,30 @@ const sendForm = () => {
 };
 
   formAll.forEach((item) => {
+    let buttons = item.querySelectorAll('.form-btn');
 
        let inputValid = item.querySelectorAll('input');
     inputValid.forEach((elem) => {
       elem.addEventListener('input', (e) => {
         if(elem.matches('.form-phone')){
              elem.value = elem.value.replace(/[^+0-9]/,  ''); 
-          if(elem.value.length > 11){
+          if(elem.value.length > 11 || elem.value.length < 5){
             elem.value = elem.value.substring(12, '');
           }
         }else if (elem.matches('[placeholder="Ваше имя"]')){
+
           elem.value = elem.value.replace(/[^а-яА-Я]/,  '');
         }else if (elem.matches('#form2-message')){
           elem.value = elem.value.replace(/[^а-яА-Я\s\,\.\?\!\-\;\:]/,  '');
         }else if (elem.matches('.form-email')){
-          elem.value = elem.value.replace(/^\w+@\w+\.\w{2,}$/,  '');
+          let reg = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
+          if(!reg.test(elem.value)){
+            buttons[0].disabled = true;
+          }else{
+            buttons[0].disabled = false;
+          }
         }
+        
       });
     });
 
